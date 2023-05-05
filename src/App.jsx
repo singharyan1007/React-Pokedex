@@ -1,4 +1,4 @@
-import  PokedexView  from './components/PokedexView';
+import  PokedexView  from './components/PokedexView/PokedexView';
 import  DetailsView  from './components/DetailsView';
 import Navigation  from './components/Navigation/Navigation';
 import  Heading  from './components/Heading/Heading';

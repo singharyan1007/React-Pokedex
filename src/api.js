@@ -17,16 +17,20 @@ const get=async (endpoint)=>{
 
 }
 
-export const fetchPokemons=(limit,offset)=>{
-    return get(`pokemon?limit=${limit}&offset=${offset}`);
+export const fetchPokemons = ( limit, offset ) => {
+	return get( `pokemon?limit=${ limit }&offset=${ offset }` );
 };
 
-export const fetchPokemonData=(pokemonId)=>{
-    return get(`pokemon${pokemonId}`);
+// Fetch specific pokemon data.
+export const fetchPokemonData = ( pokemonId ) => {
+	return get( `pokemon/${ pokemonId }` );
 };
 
-export const fetchPokemonEvolutionChain = async (pokemonId) => {
-    const data = await get(`pokemon-species/${pokemonId}`);
-    const evolutionChainId = data.evolution_chain.url.match(/\/(\d+)\//)[1];
-    return await get(`evolution-chain/${evolutionChainId}`);
-  };
+// Fetch pokemon evolutions.
+export const fetchPokemonEvolutionChain = ( pokemonId ) => {
+	return get( `pokemon-species/${ pokemonId }` ).then( ( data ) => {
+		const evolutionChainId = data.evolution_chain.url.match( /\/(\d+)\// )[ 1 ];
+
+		return get( `evolution-chain/${ evolutionChainId }` );
+	} );
+};
