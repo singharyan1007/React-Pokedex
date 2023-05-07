@@ -14,7 +14,7 @@ function Navigation() {
       <div className="table m-auto bg-[#FFF] shadow-lg">
       {
         generations.map(({id,link,text})=>(
-          <CustomNavLink exact key={id} to={link}>{text}</CustomNavLink>
+          <CustomNavLink exact="true" key={id} to={link}>{text}</CustomNavLink>
         ))
 
 

@@ -1,0 +1,15 @@
+.evolution-container >*{
+    width: 33.3333%;
+}
+
+.evolve-container .bg-pokeball
+{
+    color: rgba( 0,0,0,.05 );
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    top: 50%;
+    transform: translateX( -50% ) translateY( -50% );
+    font-size: .7vmin;
+    z-index: 1;
+}
