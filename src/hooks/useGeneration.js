@@ -1,56 +1,59 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {  fetchPokemonData, fetchPokemons } from "../api";
-import generations from "../data/generation";
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { fetchPokemonData, fetchPokemons } from '../api';
+import generations from '../data/generation';
 
-//Hook to get Pokemon geneartion data using ID
-function useGeneration(generationID) {
-  const [pokemons, setPokemons] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+/**
+ * Hook to get Pokemons generation data by ID.
+ *
+ * @param {number} generationId - Generation ID to get data for.
+ *
+ * @return {Object}
+ */
+export default function useGeneration( generationId ) {
+	const [ pokemons, setPokemons ] = useState( [] );
+	const [ isLoading, setIsLoading ] = useState( false );
 
-  const generation = useMemo(() => {
-    return generations.find((gen) => gen.id === generationID);
-  }, [generationID]);
-  //memoizes the generationID and returns the first element it finds in the generation array, when gen.id===generationID
-  //The second argument is the array dependency, means the function will only be recalculated when the generationID changes
+	const generation = useMemo( () => {
+		return generations.find( ( gen ) => gen.id === generationId );
+	}, [ generationId ] );
 
-  const fetchData = useCallback(() => {
-    //fetches pokemons data by generation
-    if (generations.limit === null || generation.offset === null) {
-      return;
-    }
-    //test case for ID which is not present in the data
-    setIsLoading(true);
-    setPokemons([]);
+	// Fetch pokemons data by generation.
+	const fetchData = useCallback( () => {
+		if ( generation.limit === null || generation.offset === null ) {
+			return;
+		}
 
-    //Get all pokemon data
-    fetchPokemons(generation.limit, generation.offset).then(
-      async ({ results }) => {
-        const data = [];
-        //get data for each specific Pokemon
-        await Promise.all(
-          results.map(async ({ name }) => {
-            const pokemon = await fetchPokemonData(name);
-            data[pokemon.id] = pokemon;
-          })
-        );
-        setPokemons(data);
-        setIsLoading(false);
-      }
-    );
-  },[]);
+		setIsLoading( true );
+		setPokemons( [] );
 
-  //Refetch on generation change
-  useEffect(()=>{
-    if(generationID){
-        fetchData();
-    }
-  },[generationID]);
+		// Get all Pokemons for the selected generation.
+		console.log(generation.id,generation.limit, generation.offset);
+		fetchPokemons( generation.limit, generation.offset ).then( async ( { results } ) => {
+			const data = [];
 
-  return {
-    data:pokemons,
-    refetch:fetchData,
-    isLoading,
-  }
+			// Get data for each specific Pokemon.
+			await Promise.all( results.map( async ( { name } ) => {
+				const pokemon = await fetchPokemonData( name );
+
+				data[ pokemon.id ] = pokemon;
+			} ) );
+			console.log(data);
+
+			setPokemons( data );
+			setIsLoading( false );
+		} );
+	}, [generation.limit,generation.offset] );
+
+	// Refetch on generation change.
+	useEffect( () => {
+		if ( generationId ) {
+			fetchData();
+		}
+	}, [ generationId ] );
+
+	return {
+		data: pokemons,
+		refetch: fetchData,
+		isLoading,
+	};
 }
-
-export default useGeneration

@@ -1,6 +1,3 @@
-import generations from './data/generation'
-
-
 export const normalizeEvolutionChain = ( evolution ) => {
 	if ( ! evolution.evolves_to.length ) {
 		return [];
@@ -37,9 +34,11 @@ export const normalizeEvolutionChain = ( evolution ) => {
 	}, [] );
 };
 
-
-//Pokemon Image by Id
-
+/**
+ * Get pokemon image by id.
+ *
+ * 
+ */
 export const getImageURL = ( pokemonId ) => {
 	const baseURL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other';
 
@@ -52,7 +51,11 @@ export const getImageURL = ( pokemonId ) => {
 	return `${ baseURL }/dream-world/${ pokemonId }.svg`;
 };
 
-
+/**
+ * Get generation object by pokemon ID.
+ *
+ *
+ */
 export const getGenerationByPokemonId = ( id ) => {
 	return generations.find( ( { offset, limit } ) => {
 		const firstId = offset + 1;

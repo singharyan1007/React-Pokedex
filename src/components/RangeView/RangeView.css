@@ -1,3 +1,14 @@
+.range-view
+{
+    width: 100%;
+    background-color: rgba( 0,0,0,.1 );
+    border-radius: 100rem;
+    overflow: hidden;
+    height: 5px;
+    margin: 0 10px;
+    position: relative;
+}
+
 .range-view::after
 {
     content: '';

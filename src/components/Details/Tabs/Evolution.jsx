@@ -1,6 +1,6 @@
 import Loader from "../../Loader/Loader";
 import {useEvolutionChain} from '../../../hooks/useEvolutionChain'
-import EvolutionItem from '../../EvolutionItem'
+import EvolutionItem from '../../EvolutionItem/EvolutionItem'
 
 function Evolution({pokemon,onPokemonChange}){
     const {isLoading,evolutionChain}=useEvolutionChain(pokemon.id);
@@ -28,3 +28,5 @@ function Evolution({pokemon,onPokemonChange}){
         </div>
     )
 }
+
+export default Evolution
